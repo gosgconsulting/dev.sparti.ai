@@ -5,7 +5,7 @@ import { classNames } from '~/utils/classNames';
 import { HeaderActionButtons } from './HeaderActionButtons.client';
 import { ChatDescription } from '~/lib/persistence/ChatDescription.client';
 
-export function Header() {
+export function Header({ onSidebarToggle }: { onSidebarToggle?: () => void }) {
   const chat = useStore(chatStore);
 
   return (
@@ -15,8 +15,13 @@ export function Header() {
         'border-bolt-elements-borderColor': chat.started,
       })}
     >
-      <div className="flex items-center gap-2 z-logo text-bolt-elements-textPrimary cursor-pointer">
-        <div className="i-ph:sidebar-simple-duotone text-xl" />
+      <div className="flex items-center gap-2 z-logo text-bolt-elements-textPrimary">
+        <div
+          className="i-ph:sidebar-simple-duotone text-xl cursor-pointer"
+          onClick={() => onSidebarToggle?.()}
+          role={onSidebarToggle ? 'button' : undefined}
+          aria-label={onSidebarToggle ? 'Toggle sidebar' : undefined}
+        />
         <a href="/" className="text-accent flex items-center">
           <span className="i-sparti:logo-text?mask inline-block w-[90px] h-[24px]" />
         </a>

@@ -36,7 +36,13 @@ const toastAnimation = cssTransition({
 
 const logger = createScopedLogger('Chat');
 
-export function Chat() {
+export function Chat({
+  sidebarOpen,
+  onSidebarOpenChange,
+}: {
+  sidebarOpen?: boolean;
+  onSidebarOpenChange?: (open: boolean) => void;
+}) {
   renderLogger.trace('Chat');
 
   const { ready, initialMessages, storeMessageHistory, importChat, exportChat } = useChatHistory();
@@ -54,6 +60,8 @@ export function Chat() {
           exportChat={exportChat}
           storeMessageHistory={storeMessageHistory}
           importChat={importChat}
+          sidebarOpen={sidebarOpen}
+          onSidebarOpenChange={onSidebarOpenChange}
         />
       )}
       <ToastContainer
@@ -112,10 +120,20 @@ interface ChatProps {
   importChat: (description: string, messages: Message[]) => Promise<void>;
   exportChat: () => void;
   description?: string;
+  sidebarOpen?: boolean;
+  onSidebarOpenChange?: (open: boolean) => void;
 }
 
 export const ChatImpl = memo(
-  ({ description, initialMessages, storeMessageHistory, importChat, exportChat }: ChatProps) => {
+  ({
+    description,
+    initialMessages,
+    storeMessageHistory,
+    importChat,
+    exportChat,
+    sidebarOpen,
+    onSidebarOpenChange,
+  }: ChatProps) => {
     useShortcuts();
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -697,6 +715,8 @@ export const ChatImpl = memo(
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
         addToolResult={addToolResult}
+        sidebarOpen={sidebarOpen}
+        onSidebarOpenChange={onSidebarOpenChange}
       />
     );
   },

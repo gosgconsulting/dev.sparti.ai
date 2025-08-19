@@ -79,6 +79,10 @@ interface BaseChatProps {
   selectedElement?: ElementInfo | null;
   setSelectedElement?: (element: ElementInfo | null) => void;
   addToolResult?: ({ toolCallId, result }: { toolCallId: string; result: any }) => void;
+
+  // Optional external control for sidebar (Menu)
+  sidebarOpen?: boolean;
+  onSidebarOpenChange?: (open: boolean) => void;
 }
 
 export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
@@ -128,6 +132,8 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
       addToolResult = () => {
         throw new Error('addToolResult not implemented');
       },
+      sidebarOpen,
+      onSidebarOpenChange,
     },
     ref,
   ) => {
@@ -347,7 +353,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         )}
         data-chat-visible={showChat}
       >
-        <ClientOnly>{() => <Menu nonSticky />}</ClientOnly>
+        <ClientOnly>{() => <Menu nonSticky open={sidebarOpen} onOpenChange={onSidebarOpenChange} />}</ClientOnly>
         <div
           className={classNames(
             'flex flex-col lg:flex-row w-full',

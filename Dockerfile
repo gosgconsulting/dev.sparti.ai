@@ -4,8 +4,16 @@ FROM ghcr.io/stackblitz-labs/bolt.diy:latest
 # Set working directory
 WORKDIR /app
 
-# Copy Sparti Theme public assets (if present) into the app's public folder
-# This enables optional theming without modifying core code
+# Bring in our app code and dependencies so the container runs THIS repo, not the base image demo
+# 1) Install deps based on our lockfile
+COPY package.json pnpm-lock.yaml* ./
+RUN corepack enable && corepack prepare pnpm@9.14.4 --activate && pnpm install --frozen-lockfile
+
+# 2) Copy the rest of the repo (respects .dockerignore)
+COPY . .
+
+# 3) Optional theme assets (if present)
+RUN mkdir -p /app/public/themes/sparti || true
 COPY ["Sparti Theme/public/themes/sparti/", "/app/public/themes/sparti/"]
 
 # Railway requires the app to bind to 0.0.0.0 and use the PORT environment variable
@@ -31,5 +39,4 @@ ENV CI=true
 # Expose the port that Railway will assign
 EXPOSE ${PORT:-5173}
 
-# Railway uses a different startup command, so we'll use the default from the base image
-# The base image should already have the proper CMD/ENTRYPOINT
+# Use the base image's default CMD/ENTRYPOINT which will now run our package.json scripts

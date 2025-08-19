@@ -22,6 +22,11 @@ export const links: LinksFunction = () => {
   const links = [
     {
       rel: 'icon',
+      href: '/logo.svg?v=sparti',
+      type: 'image/svg+xml',
+    },
+    {
+      rel: 'icon',
       href: '/logo-light-styled.png?v=sparti',
       type: 'image/png',
       media: '(prefers-color-scheme: light)',

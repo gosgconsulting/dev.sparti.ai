@@ -16,3 +16,8 @@ CHOKIDAR_USEPOLLING = "true"
 WATCHPACK_POLLING = "true"
 FORCE_COLOR = "0"
 CI = "true"
+HOST = "0.0.0.0"
+# Railway will inject PORT at runtime; default to 5173 for local container runs
+PORT = "5173"
+# Context window default from template (tunable via Railway envs)
+DEFAULT_NUM_CTX = "32768"

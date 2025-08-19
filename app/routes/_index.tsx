@@ -1,5 +1,7 @@
 import { json, type MetaFunction } from '@remix-run/cloudflare';
 import { ClientOnly } from 'remix-utils/client-only';
+import { useEffect, useState } from 'react';
+import { useLocation } from '@remix-run/react';
 import { BaseChat } from '~/components/chat/BaseChat';
 import { Chat } from '~/components/chat/Chat.client';
 import { Header } from '~/components/header/Header';
@@ -20,15 +22,36 @@ export const loader = () => json({});
  * to keep the UI clean and consistent with the design system.
  */
 export default function Index() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const isChat = location.pathname.startsWith('/chat');
+
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(() => isHome);
+
+  // Apply route-aware defaults on route changes
+  useEffect(() => {
+    if (isChat) {
+      setSidebarOpen(false);
+    } else if (isHome) {
+      setSidebarOpen(true);
+    }
+  }, [isHome, isChat]);
+
   return (
     <div className="flex flex-col h-full w-full bg-bolt-elements-background-depth-1">
       <BackgroundRays />
-      <Header />
+      <Header onSidebarToggle={isHome ? () => setSidebarOpen((v) => !v) : undefined} />
 
       {/* Chat section */}
       <section aria-label="Chat" className="w-full px-4 sm:px-6 lg:px-8 pt-6 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-chat mx-auto">
-          <ClientOnly fallback={<BaseChat />}>{() => <Chat />}</ClientOnly>
+          <ClientOnly
+            fallback={<BaseChat sidebarOpen={sidebarOpen} onSidebarOpenChange={isHome ? setSidebarOpen : undefined} />}
+          >
+            {() => (
+              <Chat sidebarOpen={!isChat && sidebarOpen} onSidebarOpenChange={isHome ? setSidebarOpen : undefined} />
+            )}
+          </ClientOnly>
         </div>
       </section>
       {/* Divider between sections */}

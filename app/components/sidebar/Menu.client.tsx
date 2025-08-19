@@ -63,16 +63,41 @@ function CurrentDateTime() {
   );
 }
 
-export const Menu = ({ nonSticky = false }: { nonSticky?: boolean }) => {
+export const Menu = ({
+  nonSticky = false,
+  open: controlledOpen,
+  onOpenChange,
+}: {
+  nonSticky?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) => {
   const { duplicateCurrentChat, exportChat } = useChatHistory();
   const menuRef = useRef<HTMLDivElement>(null);
   const [list, setList] = useState<ChatHistoryItem[]>([]);
-  const [open, setOpen] = useState(!nonSticky);
+  const [internalOpen, setInternalOpen] = useState(!nonSticky);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const profile = useStore(profileStore);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const open = controlledOpen ?? internalOpen;
+  const setOpen = useCallback(
+    (value: boolean) => {
+      // If controlled but no onOpenChange provided, do nothing (external read-only)
+      if (controlledOpen !== undefined && !onOpenChange) {
+        return;
+      }
+
+      if (onOpenChange) {
+        onOpenChange(value);
+      } else {
+        setInternalOpen(value);
+      }
+    },
+    [onOpenChange, controlledOpen],
+  );
 
   const { filteredItems: filteredList, handleSearchChange } = useSearchFilter({
     items: list,
@@ -261,10 +286,12 @@ export const Menu = ({ nonSticky = false }: { nonSticky?: boolean }) => {
     });
   }, [filteredList]); // Depends only on filteredList
 
-  // Keep open state in sync with sticky mode changes
+  // Keep open state in sync with sticky mode changes when uncontrolled
   useEffect(() => {
-    setOpen(!nonSticky);
-  }, [nonSticky]);
+    if (controlledOpen === undefined) {
+      setInternalOpen(!nonSticky);
+    }
+  }, [nonSticky, controlledOpen]);
 
   useEffect(() => {
     if (open) {
@@ -284,6 +311,11 @@ export const Menu = ({ nonSticky = false }: { nonSticky?: boolean }) => {
   }, [open, selectionMode]);
 
   useEffect(() => {
+    // When controlled externally, disable hover-based toggling
+    if (controlledOpen !== undefined) {
+      return undefined;
+    }
+
     const enterThreshold = 20;
     const closeThreshold = 360; // ~menu width + padding
 
@@ -309,10 +341,12 @@ export const Menu = ({ nonSticky = false }: { nonSticky?: boolean }) => {
 
     window.addEventListener('mousemove', onMouseMove);
 
-    return () => {
+    const cleanup = () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
-  }, [isSettingsOpen, nonSticky]);
+
+    return cleanup;
+  }, [isSettingsOpen, nonSticky, controlledOpen]);
 
   const handleDuplicate = async (id: string) => {
     await duplicateCurrentChat(id);
