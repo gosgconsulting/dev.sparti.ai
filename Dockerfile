@@ -11,6 +11,8 @@ RUN corepack enable && corepack prepare pnpm@9.14.4 --activate && pnpm install -
 
 # 2) Copy the rest of the repo (respects .dockerignore)
 COPY . .
+# Ensure shell scripts are executable (fixes: sh: 1: ./bindings.sh: Permission denied)
+RUN chmod +x ./bindings.sh || true
 
 # 3) Optional theme assets (if present)
 RUN mkdir -p /app/public/themes/sparti || true
