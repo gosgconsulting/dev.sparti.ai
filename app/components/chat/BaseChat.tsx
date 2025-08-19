@@ -340,12 +340,27 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const baseChat = (
       <div
         ref={ref}
-        className={classNames(styles.BaseChat, 'relative flex h-full w-full overflow-hidden')}
+        className={classNames(
+          styles.BaseChat,
+          'relative flex w-full',
+          chatStarted ? 'h-full overflow-hidden' : 'h-auto overflow-visible',
+        )}
         data-chat-visible={showChat}
       >
         <ClientOnly>{() => <Menu nonSticky />}</ClientOnly>
-        <div className="flex flex-col lg:flex-row overflow-y-auto w-full h-full">
-          <div className={classNames(styles.Chat, 'flex flex-col flex-grow lg:min-w-[var(--chat-min-width)] h-full')}>
+        <div
+          className={classNames(
+            'flex flex-col lg:flex-row w-full',
+            chatStarted ? 'overflow-y-auto h-full' : 'overflow-visible h-auto',
+          )}
+        >
+          <div
+            className={classNames(
+              styles.Chat,
+              'flex flex-col flex-grow lg:min-w-[var(--chat-min-width)]',
+              chatStarted ? 'h-full' : 'h-auto',
+            )}
+          >
             <StickToBottom
               className={classNames('pt-6 px-2 sm:px-6 relative', {
                 'h-full flex flex-col modern-scrollbar': chatStarted,

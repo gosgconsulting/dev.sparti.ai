@@ -22,8 +22,20 @@ export const links: LinksFunction = () => {
   const links = [
     {
       rel: 'icon',
-      href: '/favicon.svg',
-      type: 'image/svg+xml',
+      href: '/logo-light-styled.png?v=sparti',
+      type: 'image/png',
+      media: '(prefers-color-scheme: light)',
+    },
+    {
+      rel: 'icon',
+      href: '/logo-dark-styled.png?v=sparti',
+      type: 'image/png',
+      media: '(prefers-color-scheme: dark)',
+    },
+    {
+      rel: 'shortcut icon',
+      href: '/logo-light-styled.png?v=sparti',
+      type: 'image/png',
     },
     { rel: 'stylesheet', href: reactToastifyStyles },
     { rel: 'stylesheet', href: tailwindReset },

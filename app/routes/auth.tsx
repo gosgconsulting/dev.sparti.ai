@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/Button';
 import { updateProfile } from '~/lib/stores/profile';
 
 export async function loader({ context }: LoaderFunctionArgs) {
-  const envCF = context.cloudflare?.env as any | undefined;
+  const envCF = (context as any)?.cloudflare?.env as any | undefined;
   const nodeEnv = (globalThis as any)?.process?.env as Record<string, string> | undefined;
   const SUPABASE_URL = envCF?.SUPABASE_URL ?? nodeEnv?.SUPABASE_URL ?? '';
   const SUPABASE_ANON_KEY = envCF?.SUPABASE_ANON_KEY ?? nodeEnv?.SUPABASE_ANON_KEY ?? '';
