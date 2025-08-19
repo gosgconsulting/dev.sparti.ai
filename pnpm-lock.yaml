@@ -167,6 +167,9 @@ importers:
       '@remix-run/react':
         specifier: ^2.15.2
         version: 2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+      '@supabase/supabase-js':
+        specifier: ^2.55.0
+        version: 2.55.0
       '@tanstack/react-virtual':
         specifier: ^3.13.0
         version: 3.13.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -206,6 +209,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -322,7 +328,7 @@ importers:
         version: 0.2.0(@remix-run/react@2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(@remix-run/server-runtime@2.16.8(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       remix-utils:
         specifier: ^7.7.0
-        version: 7.7.0(@remix-run/cloudflare@2.16.8(@cloudflare/workers-types@4.20250722.0)(typescript@5.8.3))(@remix-run/node@2.16.8(typescript@5.8.3))(@remix-run/react@2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(@remix-run/router@1.23.0)(react@18.3.1)(zod@3.25.76)
+        version: 7.7.0(@remix-run/cloudflare@2.16.8(@cloudflare/workers-types@4.20250722.0)(typescript@5.8.3))(@remix-run/node@2.16.8(typescript@5.8.3))(@remix-run/react@2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(@remix-run/router@1.23.0)(crypto-js@4.2.0)(react@18.3.1)(zod@3.25.76)
       rollup-plugin-node-polyfills:
         specifier: ^0.2.1
         version: 0.2.1
@@ -375,6 +381,9 @@ importers:
       '@testing-library/react':
         specifier: ^16.2.0
         version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/diff':
         specifier: ^5.2.3
         version: 5.2.3
@@ -3235,6 +3244,28 @@ packages:
     peerDependencies:
       eslint: '>=8.40.0'
 
+  '@supabase/auth-js@2.71.1':
+    resolution: {integrity: sha512-mMIQHBRc+SKpZFRB2qtupuzulaUhFYupNyxqDj5Jp/LyPvcWvjaJzZzObv6URtL/O6lPxkanASnotGtNpS3H2Q==}
+
+  '@supabase/functions-js@2.4.5':
+    resolution: {integrity: sha512-v5GSqb9zbosquTo6gBwIiq7W9eQ7rE5QazsK/ezNiQXdCbY+bH8D9qEaBIkhVvX4ZRW5rP03gEfw5yw9tiq4EQ==}
+
+  '@supabase/node-fetch@2.6.15':
+    resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
+    engines: {node: 4.x || >=6.0.0}
+
+  '@supabase/postgrest-js@1.19.4':
+    resolution: {integrity: sha512-O4soKqKtZIW3olqmbXXbKugUtByD2jPa8kL2m2c1oozAO11uCcGrRhkZL0kVxjBLrXHE0mdSkFsMj7jDSfyNpw==}
+
+  '@supabase/realtime-js@2.15.1':
+    resolution: {integrity: sha512-edRFa2IrQw50kNntvUyS38hsL7t2d/psah6om6aNTLLcWem0R6bOUq7sk7DsGeSlNfuwEwWn57FdYSva6VddYw==}
+
+  '@supabase/storage-js@2.11.0':
+    resolution: {integrity: sha512-Y+kx/wDgd4oasAgoAq0bsbQojwQ+ejIif8uczZ9qufRHWFLMU5cODT+ApHsSrDufqUcVKt+eyxtOXSkeh2v9ww==}
+
+  '@supabase/supabase-js@2.55.0':
+    resolution: {integrity: sha512-Y1uV4nEMjQV1x83DGn7+Z9LOisVVRlY1geSARrUHbXWgbyKLZ6/08dvc0Us1r6AJ4tcKpwpCZWG9yDQYo1JgHg==}
+
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
@@ -3301,6 +3332,9 @@ packages:
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
+  '@types/crypto-js@4.2.2':
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -3374,6 +3408,9 @@ packages:
   '@types/path-browserify@1.0.3':
     resolution: {integrity: sha512-ZmHivEbNCBtAfcrFeBCiTjdIc2dey0l7oCGNGpSuRTy8jP6UVND7oUowlvDujBy8r2Hoa8bfFUOCiPWfmtkfxw==}
 
+  '@types/phoenix@1.6.6':
+    resolution: {integrity: sha512-PIzZZlEppgrpoT2QgbnDU+MMzuR6BbCjllj0bM70lWoejMeNJAxCchxnv7J3XFkI8MpygtRpzXrIlmWUBclP5A==}
+
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
 
@@ -3414,6 +3451,9 @@ packages:
 
   '@types/verror@1.10.11':
     resolution: {integrity: sha512-RlDm9K7+o5stv0Co8i8ZRGxDbrTxhJtgjqjFyVh/tXQyl/rYtTKlnTvZ88oSTeYREWurwx20Js4kTuKCsFkUtg==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -4283,6 +4323,9 @@ packages:
   crypto-browserify@3.12.1:
     resolution: {integrity: sha512-r4ESw/IlusD17lgQi1O20Fa3qNnsckR126TdUuBgAu7GBYSIPvdNyONd3Zrxh0xCwA4+6w/TDArBPsMvhur+KQ==}
     engines: {node: '>= 0.10'}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   css-box-model@1.2.1:
     resolution: {integrity: sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw==}
@@ -7658,6 +7701,9 @@ packages:
     resolution: {integrity: sha512-FVDYdxtnj0G6Qm/DhNPSb8Ju59ULcup3tuJxkFb5K8Bv2pUXILbf0xZWU8PX8Ov19OXljbUyveOFwRMwkXzO+A==}
     engines: {node: '>=16'}
 
+  tr46@0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+
   tr46@5.1.1:
     resolution: {integrity: sha512-hdF5ZgjTqgAntKkklYw0R03MG2x/bSzTtkxmIRw/sTNV8YXsCJ1tfLAX23lhxhHJlEf3CRCOCGGWw3vI3GaSPw==}
     engines: {node: '>=18'}
@@ -8095,6 +8141,9 @@ packages:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
 
+  webidl-conversions@3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
@@ -8110,6 +8159,9 @@ packages:
   whatwg-url@14.2.0:
     resolution: {integrity: sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==}
     engines: {node: '>=18'}
+
+  whatwg-url@5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
   when-exit@2.1.4:
     resolution: {integrity: sha512-4rnvd3A1t16PWzrBUcSDZqcAmsUIy4minDXT/CZ8F2mVDgd65i4Aalimgz1aQkRGU0iH5eT5+6Rx2TK8o443Pg==}
@@ -11375,6 +11427,48 @@ snapshots:
       - supports-color
       - typescript
 
+  '@supabase/auth-js@2.71.1':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/functions-js@2.4.5':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/node-fetch@2.6.15':
+    dependencies:
+      whatwg-url: 5.0.0
+
+  '@supabase/postgrest-js@1.19.4':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/realtime-js@2.15.1':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+      '@types/phoenix': 1.6.6
+      '@types/ws': 8.18.1
+      ws: 8.18.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@supabase/storage-js@2.11.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/supabase-js@2.55.0':
+    dependencies:
+      '@supabase/auth-js': 2.71.1
+      '@supabase/functions-js': 2.4.5
+      '@supabase/node-fetch': 2.6.15
+      '@supabase/postgrest-js': 1.19.4
+      '@supabase/realtime-js': 2.15.1
+      '@supabase/storage-js': 2.11.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@swc/helpers@0.5.17':
     dependencies:
       tslib: 2.8.1
@@ -11460,6 +11554,8 @@ snapshots:
 
   '@types/cookie@0.6.0': {}
 
+  '@types/crypto-js@4.2.2': {}
+
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 2.1.0
@@ -11533,6 +11629,8 @@ snapshots:
 
   '@types/path-browserify@1.0.3': {}
 
+  '@types/phoenix@1.6.6': {}
+
   '@types/plist@3.0.5':
     dependencies:
       '@types/node': 24.1.0
@@ -11580,6 +11678,10 @@ snapshots:
 
   '@types/verror@1.10.11':
     optional: true
+
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 24.1.0
 
   '@types/yauzl@2.10.3':
     dependencies:
@@ -12747,6 +12849,8 @@ snapshots:
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
+
+  crypto-js@4.2.0: {}
 
   css-box-model@1.2.1:
     dependencies:
@@ -16229,7 +16333,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  remix-utils@7.7.0(@remix-run/cloudflare@2.16.8(@cloudflare/workers-types@4.20250722.0)(typescript@5.8.3))(@remix-run/node@2.16.8(typescript@5.8.3))(@remix-run/react@2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(@remix-run/router@1.23.0)(react@18.3.1)(zod@3.25.76):
+  remix-utils@7.7.0(@remix-run/cloudflare@2.16.8(@cloudflare/workers-types@4.20250722.0)(typescript@5.8.3))(@remix-run/node@2.16.8(typescript@5.8.3))(@remix-run/react@2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(@remix-run/router@1.23.0)(crypto-js@4.2.0)(react@18.3.1)(zod@3.25.76):
     dependencies:
       type-fest: 4.41.0
     optionalDependencies:
@@ -16237,6 +16341,7 @@ snapshots:
       '@remix-run/node': 2.16.8(typescript@5.8.3)
       '@remix-run/react': 2.16.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       '@remix-run/router': 1.23.0
+      crypto-js: 4.2.0
       react: 18.3.1
       zod: 3.25.76
 
@@ -16974,6 +17079,8 @@ snapshots:
     dependencies:
       tldts: 6.1.86
 
+  tr46@0.0.3: {}
+
   tr46@5.1.1:
     dependencies:
       punycode: 2.3.1
@@ -17482,6 +17589,8 @@ snapshots:
 
   web-streams-polyfill@3.3.3: {}
 
+  webidl-conversions@3.0.1: {}
+
   webidl-conversions@7.0.0: {}
 
   whatwg-encoding@3.1.1:
@@ -17494,6 +17603,11 @@ snapshots:
     dependencies:
       tr46: 5.1.1
       webidl-conversions: 7.0.0
+
+  whatwg-url@5.0.0:
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
 
   when-exit@2.1.4: {}
 

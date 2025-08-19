@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { logStore } from '~/lib/stores/logs';
 import { classNames } from '~/utils/classNames';
-import Cookies from 'js-cookie';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '~/components/ui/Collapsible';
 import { Button } from '~/components/ui/Button';
+import { storeGitHubToken, getGitHubToken, deleteGitHubToken } from '~/lib/server/supabase-settings';
+import { encryptToken, decryptToken } from '~/lib/utils/encryption';
 
 interface GitHubUserResponse {
   login: string;
@@ -150,20 +151,14 @@ export default function GitHubConnection() {
         rateLimit,
       }));
 
-      // Set cookies for client-side access
-      Cookies.set('githubUsername', user.login);
-      Cookies.set('githubToken', token);
-      Cookies.set('git:github.com', JSON.stringify({ username: token, password: 'x-oauth-basic' }));
-
-      // Store connection details in localStorage
-      localStorage.setItem(
-        'github_connection',
-        JSON.stringify({
-          user,
-          token,
-          tokenType: tokenTypeRef.current,
-        }),
-      );
+      // Store GitHub token securely in Supabase
+      try {
+        const encryptedToken = encryptToken(token);
+        await storeGitHubToken(user.id.toString(), encryptedToken);
+      } catch (error) {
+        console.error('Failed to store GitHub token in Supabase:', error);
+        toast.error('Failed to securely store GitHub token');
+      }
 
       logStore.logInfo('Connected to GitHub', {
         type: 'system',
@@ -349,65 +344,52 @@ export default function GitHubConnection() {
     const loadSavedConnection = async () => {
       setIsLoading(true);
 
-      const savedConnection = localStorage.getItem('github_connection');
+      /*
+       * For this implementation, we'll need to get the user ID from somewhere
+       * This would typically be from your auth system
+       */
+      const userId = 'current-user-id'; // Replace with actual user ID retrieval
 
-      if (savedConnection) {
-        try {
-          const parsed = JSON.parse(savedConnection);
+      try {
+        const encryptedToken = await getGitHubToken(userId);
+        
+        if (encryptedToken) {
+          const decryptedToken = decryptToken(encryptedToken);
+          // Fetch user data with the decrypted token
+          await fetchGithubUser(decryptedToken);
+        } else {
+          // Check for environment variable token
+          const envToken = import.meta.env.VITE_GITHUB_ACCESS_TOKEN;
 
-          if (!parsed.tokenType) {
-            parsed.tokenType = 'classic';
-          }
+          if (envToken) {
+            // Check if token type is specified in environment variables
+            const envTokenType = import.meta.env.VITE_GITHUB_TOKEN_TYPE;
+            console.log('Environment token type:', envTokenType);
 
-          // Update the ref with the parsed token type
-          tokenTypeRef.current = parsed.tokenType;
+            const tokenType =
+              envTokenType === 'classic' || envTokenType === 'fine-grained'
+                ? (envTokenType as 'classic' | 'fine-grained')
+                : 'classic';
 
-          // Set the connection
-          setConnection(parsed);
+            console.log('Using token type:', tokenType);
 
-          // If we have a token but no stats or incomplete stats, fetch them
-          if (
-            parsed.user &&
-            parsed.token &&
-            (!parsed.stats || !parsed.stats.repos || parsed.stats.repos.length === 0)
-          ) {
-            console.log('Fetching missing GitHub stats for saved connection');
-            await fetchGitHubStats(parsed.token);
-          }
-        } catch (error) {
-          console.error('Error parsing saved GitHub connection:', error);
-          localStorage.removeItem('github_connection');
-        }
-      } else {
-        // Check for environment variable token
-        const envToken = import.meta.env.VITE_GITHUB_ACCESS_TOKEN;
+            // Update both the state and the ref
+            tokenTypeRef.current = tokenType;
+            setConnection((prev) => ({
+              ...prev,
+              tokenType,
+            }));
 
-        if (envToken) {
-          // Check if token type is specified in environment variables
-          const envTokenType = import.meta.env.VITE_GITHUB_TOKEN_TYPE;
-          console.log('Environment token type:', envTokenType);
-
-          const tokenType =
-            envTokenType === 'classic' || envTokenType === 'fine-grained'
-              ? (envTokenType as 'classic' | 'fine-grained')
-              : 'classic';
-
-          console.log('Using token type:', tokenType);
-
-          // Update both the state and the ref
-          tokenTypeRef.current = tokenType;
-          setConnection((prev) => ({
-            ...prev,
-            tokenType,
-          }));
-
-          try {
-            // Fetch user data with the environment token
-            await fetchGithubUser(envToken);
-          } catch (error) {
-            console.error('Failed to connect with environment token:', error);
+            try {
+              // Fetch user data with the environment token
+              await fetchGithubUser(envToken);
+            } catch (error) {
+              console.error('Failed to connect with environment token:', error);
+            }
           }
         }
+      } catch (error) {
+        console.error('Error loading saved GitHub connection:', error);
       }
 
       setIsLoading(false);
@@ -416,24 +398,7 @@ export default function GitHubConnection() {
     loadSavedConnection();
   }, []);
 
-  // Ensure cookies are updated when connection changes
-  useEffect(() => {
-    if (!connection) {
-      return;
-    }
-
-    const token = connection.token;
-    const data = connection.user;
-
-    if (token) {
-      Cookies.set('githubToken', token);
-      Cookies.set('git:github.com', JSON.stringify({ username: token, password: 'x-oauth-basic' }));
-    }
-
-    if (data) {
-      Cookies.set('githubUsername', data.login);
-    }
-  }, [connection]);
+  // No need to update cookies when connection changes since we're using Supabase
 
   // Add function to update rate limits
   const updateRateLimits = async (token: string) => {
@@ -519,18 +484,20 @@ export default function GitHubConnection() {
     }
   };
 
-  const handleDisconnect = () => {
-    localStorage.removeItem('github_connection');
-
-    // Remove all GitHub-related cookies
-    Cookies.remove('githubToken');
-    Cookies.remove('githubUsername');
-    Cookies.remove('git:github.com');
-
-    // Reset the token type ref
-    tokenTypeRef.current = 'classic';
-    setConnection({ user: null, token: '', tokenType: 'classic' });
-    toast.success('Disconnected from GitHub');
+  const handleDisconnect = async () => {
+    // Delete GitHub token from Supabase
+    try {
+      const userId = connection.user?.id.toString() || 'current-user-id'; // Replace with actual user ID retrieval
+      await deleteGitHubToken(userId);
+      
+      // Reset the token type ref
+      tokenTypeRef.current = 'classic';
+      setConnection({ user: null, token: '', tokenType: 'classic' });
+      toast.success('Disconnected from GitHub');
+    } catch (error) {
+      console.error('Failed to delete GitHub token from Supabase:', error);
+      toast.error('Failed to remove GitHub token');
+    }
   };
 
   return (

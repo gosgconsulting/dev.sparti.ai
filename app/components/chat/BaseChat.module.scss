@@ -45,3 +45,13 @@
   fill: url(#shine-gradient);
   mix-blend-mode: overlay;
 }
+
+/* Non-destructive fallback: hide homepage intro and example prompts */
+.BaseChat {
+  :global(#intro) {
+    display: none !important;
+  }
+  :global(#examples) {
+    display: none !important;
+  }
+}

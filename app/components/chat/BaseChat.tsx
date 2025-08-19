@@ -14,14 +14,12 @@ import { getApiKeysFromCookies } from './APIKeyManager';
 import Cookies from 'js-cookie';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import styles from './BaseChat.module.scss';
-import { ImportButtons } from '~/components/chat/chatExportAndImport/ImportButtons';
-import { ExamplePrompts } from '~/components/chat/ExamplePrompts';
-import GitCloneButton from './GitCloneButton';
 import type { ProviderInfo } from '~/types/model';
-import StarterTemplates from './StarterTemplates';
 import type { ActionAlert, SupabaseAlert, DeployAlert, LlmErrorAlertType } from '~/types/actions';
 import DeployChatAlert from '~/components/deploy/DeployAlert';
 import ChatAlert from './ChatAlert';
+import { ExamplePrompts } from './ExamplePrompts';
+import StarterTemplates from './StarterTemplates';
 import type { ModelInfo } from '~/lib/modules/llm/types';
 import ProgressCompilation from './ProgressCompilation';
 import type { ProgressAnnotation } from '~/types/context';
@@ -104,7 +102,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
       enhancePrompt,
       sendMessage,
       handleStop,
-      importChat,
+      importChat: _importChat,
       exportChat,
       uploadedFiles = [],
       setUploadedFiles,
@@ -348,16 +346,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         <ClientOnly>{() => <Menu />}</ClientOnly>
         <div className="flex flex-col lg:flex-row overflow-y-auto w-full h-full">
           <div className={classNames(styles.Chat, 'flex flex-col flex-grow lg:min-w-[var(--chat-min-width)] h-full')}>
-            {!chatStarted && (
-              <div id="intro" className="mt-[16vh] max-w-2xl mx-auto text-center px-4 lg:px-0">
-                <h1 className="text-3xl lg:text-6xl font-bold text-bolt-elements-textPrimary mb-4 animate-fade-in">
-                  Where ideas begin
-                </h1>
-                <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200">
-                  Bring ideas to life in seconds or get help on existing projects.
-                </p>
-              </div>
-            )}
             <StickToBottom
               className={classNames('pt-6 px-2 sm:px-6 relative', {
                 'h-full flex flex-col modern-scrollbar': chatStarted,
@@ -365,10 +353,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
               resize="smooth"
               initial="smooth"
             >
-              <StickToBottom.Content className="flex flex-col gap-4 relative ">
+              <StickToBottom.Content>
                 <ClientOnly>
-                  {() => {
-                    return chatStarted ? (
+                  {() =>
+                    chatStarted ? (
                       <Messages
                         className="flex flex-col w-full flex-1 max-w-chat pb-4 mx-auto z-1"
                         messages={messages}
@@ -380,8 +368,33 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                         model={model}
                         addToolResult={addToolResult}
                       />
-                    ) : null;
-                  }}
+                    ) : (
+                      <>
+                        {false && (
+                          <div id="intro" className="flex flex-col items-center justify-center h-full px-4">
+                            <div className="bolt-header text-center max-w-2xl mx-auto mb-8">
+                              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-bolt-elements-textPrimary mb-4">
+                                Sparti AI Assistant
+                              </h1>
+                              <p className="text-bolt-elements-textSecondary mb-6 text-lg">
+                                Sparti is an AI assistant that helps you build full-stack web applications.
+                              </p>
+                              <p className="text-bolt-elements-textSecondary mb-6 text-lg">
+                                You can use it to build a new app from scratch or modify an existing one.
+                              </p>
+                            </div>
+                            <div className="flex flex-col gap-4 w-full max-w-xl mx-auto">
+                              <ExamplePrompts
+                                sendMessage={(event: React.UIEvent, messageInput?: string) =>
+                                  handleSendMessage(event, messageInput)
+                                }
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )
+                  }
                 </ClientOnly>
                 <ScrollToBottom />
               </StickToBottom.Content>
@@ -466,28 +479,9 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   selectedElement={selectedElement}
                   setSelectedElement={setSelectedElement}
                 />
+                <StarterTemplates />
               </div>
             </StickToBottom>
-            <div className="flex flex-col justify-center">
-              {!chatStarted && (
-                <div className="flex justify-center gap-2">
-                  {ImportButtons(importChat)}
-                  <GitCloneButton importChat={importChat} />
-                </div>
-              )}
-              <div className="flex flex-col gap-5">
-                {!chatStarted &&
-                  ExamplePrompts((event, messageInput) => {
-                    if (isStreaming) {
-                      handleStop?.();
-                      return;
-                    }
-
-                    handleSendMessage?.(event, messageInput);
-                  })}
-                {!chatStarted && <StarterTemplates />}
-              </div>
-            </div>
           </div>
           <ClientOnly>
             {() => (

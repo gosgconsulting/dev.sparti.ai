@@ -67,7 +67,7 @@ export const Menu = () => {
   const { duplicateCurrentChat, exportChat } = useChatHistory();
   const menuRef = useRef<HTMLDivElement>(null);
   const [list, setList] = useState<ChatHistoryItem[]>([]);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const profile = useStore(profileStore);
@@ -280,19 +280,18 @@ export const Menu = () => {
 
   useEffect(() => {
     const enterThreshold = 20;
-    const exitThreshold = 20;
 
     function onMouseMove(event: MouseEvent) {
       if (isSettingsOpen) {
         return;
       }
 
+      /*
+       * Keep sidebar open by default; only open on hover near the left edge.
+       * Do not auto-close based on mouse position.
+       */
       if (event.pageX < enterThreshold) {
         setOpen(true);
-      }
-
-      if (menuRef.current && event.clientX > menuRef.current.getBoundingClientRect().right + exitThreshold) {
-        setOpen(false);
       }
     }
 
@@ -315,6 +314,9 @@ export const Menu = () => {
 
   const handleSettingsClose = () => {
     setIsSettingsOpen(false);
+
+    // Ensure the sidebar returns to open state when settings are closed
+    setOpen(true);
   };
 
   const setDialogContentWithLogging = useCallback((content: DialogContent) => {
@@ -326,7 +328,7 @@ export const Menu = () => {
     <>
       <motion.div
         ref={menuRef}
-        initial="closed"
+        initial="open"
         animate={open ? 'open' : 'closed'}
         variants={menuVariants}
         style={{ width: '340px' }}
@@ -341,7 +343,13 @@ export const Menu = () => {
           <div className="text-gray-900 dark:text-white font-medium"></div>
           <div className="flex items-center gap-3">
             <span className="font-medium text-sm text-gray-900 dark:text-white truncate">
-              {profile?.username || 'Guest User'}
+              {profile?.username ? (
+                profile.username
+              ) : (
+                <a href="/auth" className="text-purple-600 hover:underline">
+                  Login
+                </a>
+              )}
             </span>
             <div className="flex items-center justify-center w-[32px] h-[32px] overflow-hidden bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-500 rounded-full shrink-0">
               {profile?.avatar ? (
