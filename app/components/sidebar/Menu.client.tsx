@@ -63,11 +63,11 @@ function CurrentDateTime() {
   );
 }
 
-export const Menu = () => {
+export const Menu = ({ nonSticky = false }: { nonSticky?: boolean }) => {
   const { duplicateCurrentChat, exportChat } = useChatHistory();
   const menuRef = useRef<HTMLDivElement>(null);
   const [list, setList] = useState<ChatHistoryItem[]>([]);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(!nonSticky);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const profile = useStore(profileStore);
@@ -261,6 +261,11 @@ export const Menu = () => {
     });
   }, [filteredList]); // Depends only on filteredList
 
+  // Keep open state in sync with sticky mode changes
+  useEffect(() => {
+    setOpen(!nonSticky);
+  }, [nonSticky]);
+
   useEffect(() => {
     if (open) {
       loadEntries();
@@ -280,18 +285,25 @@ export const Menu = () => {
 
   useEffect(() => {
     const enterThreshold = 20;
+    const closeThreshold = 360; // ~menu width + padding
 
     function onMouseMove(event: MouseEvent) {
       if (isSettingsOpen) {
         return;
       }
 
-      /*
-       * Keep sidebar open by default; only open on hover near the left edge.
-       * Do not auto-close based on mouse position.
-       */
-      if (event.pageX < enterThreshold) {
-        setOpen(true);
+      if (nonSticky) {
+        // Hover to open; auto-close when moving away
+        if (event.pageX < enterThreshold) {
+          setOpen(true);
+        } else if (event.pageX > closeThreshold) {
+          setOpen(false);
+        }
+      } else {
+        // Sticky behavior: allow hover to open, but don't auto-close
+        if (event.pageX < enterThreshold) {
+          setOpen(true);
+        }
       }
     }
 
@@ -300,7 +312,7 @@ export const Menu = () => {
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
-  }, [isSettingsOpen]);
+  }, [isSettingsOpen, nonSticky]);
 
   const handleDuplicate = async (id: string) => {
     await duplicateCurrentChat(id);
@@ -328,7 +340,7 @@ export const Menu = () => {
     <>
       <motion.div
         ref={menuRef}
-        initial="open"
+        initial={open ? 'open' : 'closed'}
         animate={open ? 'open' : 'closed'}
         variants={menuVariants}
         style={{ width: '340px' }}

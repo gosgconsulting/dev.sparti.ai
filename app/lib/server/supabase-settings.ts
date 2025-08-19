@@ -8,31 +8,6 @@ interface Profile {
   created_at: string;
 }
 
-interface UserSetting {
-  id: string;
-  user_id: string;
-  name: string;
-  value: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ApiKey {
-  id: string;
-  user_id: string;
-  provider: string;
-  key_ciphertext: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ChatId {
-  id: string;
-  user_id: string;
-  chat_id: string;
-  created_at: string;
-}
-
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -61,15 +36,16 @@ export async function getUserSetting(userId: string, settingName: string): Promi
 }
 
 export async function setUserSetting(userId: string, settingName: string, value: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('user_settings')
-    .upsert({
+  const { error } = await supabase.from('user_settings').upsert(
+    {
       user_id: userId,
       name: settingName,
       value,
-    }, {
+    },
+    {
       onConflict: 'user_id,name',
-    });
+    },
+  );
 
   if (error) {
     console.error('Error setting user setting:', error);
@@ -81,15 +57,16 @@ export async function setUserSetting(userId: string, settingName: string, value:
 
 // API key management functions
 export async function storeApiKey(userId: string, provider: string, keyCiphertext: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('api_keys')
-    .upsert({
+  const { error } = await supabase.from('api_keys').upsert(
+    {
       user_id: userId,
       provider,
       key_ciphertext: keyCiphertext,
-    }, {
+    },
+    {
       onConflict: 'user_id,provider',
-    });
+    },
+  );
 
   if (error) {
     console.error('Error storing API key:', error);
@@ -129,11 +106,7 @@ export async function getApiKey(userId: string, provider: string): Promise<strin
 }
 
 export async function deleteApiKey(userId: string, provider: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('api_keys')
-    .delete()
-    .eq('user_id', userId)
-    .eq('provider', provider);
+  const { error } = await supabase.from('api_keys').delete().eq('user_id', userId).eq('provider', provider);
 
   if (error) {
     console.error('Error deleting API key:', error);
@@ -159,10 +132,7 @@ export async function linkChatIdToUser(userId: string, chatId: string): Promise<
 }
 
 export async function getUserChatIds(userId: string): Promise<string[] | null> {
-  const { data, error } = await supabase
-    .from('chat_ids')
-    .select('chat_id')
-    .eq('user_id', userId);
+  const { data, error } = await supabase.from('chat_ids').select('chat_id').eq('user_id', userId);
 
   if (error) {
     console.error('Error fetching user chat IDs:', error);
@@ -173,11 +143,7 @@ export async function getUserChatIds(userId: string): Promise<string[] | null> {
 }
 
 export async function deleteUserChatId(userId: string, chatId: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('chat_ids')
-    .delete()
-    .eq('user_id', userId)
-    .eq('chat_id', chatId);
+  const { error } = await supabase.from('chat_ids').delete().eq('user_id', userId).eq('chat_id', chatId);
 
   if (error) {
     console.error('Error deleting user chat ID:', error);
@@ -203,11 +169,7 @@ export async function createProfile(userId: string, email: string): Promise<bool
 }
 
 export async function getProfile(userId: string): Promise<Profile | null> {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
+  const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
 
   if (error) {
     console.error('Error fetching profile:', error);

@@ -24,12 +24,14 @@
     "paths": {
       "~/*": ["./app/*"]
     },
+
     // vite takes care of building everything, not tsc
     "noEmit": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**/*.d.ts",
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",

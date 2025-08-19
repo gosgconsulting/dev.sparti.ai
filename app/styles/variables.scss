@@ -104,6 +104,70 @@
   --bolt-terminal-brightWhite: #a5a5a5;
   --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3); // Example light theme color
   --modern-scrollbar-thumb-backgroundHover: rgba(74, 74, 74, 0.8);
+
+  /* Sparti aliases for Bolt tokens (Light) */
+  --sparti-elements-borderColor: var(--bolt-elements-borderColor);
+  --sparti-elements-borderColorActive: var(--bolt-elements-borderColorActive);
+  --sparti-elements-bg-depth-1: var(--bolt-elements-bg-depth-1);
+  --sparti-elements-bg-depth-2: var(--bolt-elements-bg-depth-2);
+  --sparti-elements-bg-depth-3: var(--bolt-elements-bg-depth-3);
+  --sparti-elements-bg-depth-4: var(--bolt-elements-bg-depth-4);
+  --sparti-elements-textPrimary: var(--bolt-elements-textPrimary);
+  --sparti-elements-textSecondary: var(--bolt-elements-textSecondary);
+  --sparti-elements-textTertiary: var(--bolt-elements-textTertiary);
+  --sparti-elements-code-background: var(--bolt-elements-code-background);
+  --sparti-elements-code-text: var(--bolt-elements-code-text);
+  --sparti-elements-button-primary-background: var(--bolt-elements-button-primary-background);
+  --sparti-elements-button-primary-backgroundHover: var(--bolt-elements-button-primary-backgroundHover);
+  --sparti-elements-button-primary-text: var(--bolt-elements-button-primary-text);
+  --sparti-elements-button-secondary-background: var(--bolt-elements-button-secondary-background);
+  --sparti-elements-button-secondary-backgroundHover: var(--bolt-elements-button-secondary-backgroundHover);
+  --sparti-elements-button-secondary-text: var(--bolt-elements-button-secondary-text);
+  --sparti-elements-button-danger-background: var(--bolt-elements-button-danger-background);
+  --sparti-elements-button-danger-backgroundHover: var(--bolt-elements-button-danger-backgroundHover);
+  --sparti-elements-button-danger-text: var(--bolt-elements-button-danger-text);
+  --sparti-elements-item-contentDefault: var(--bolt-elements-item-contentDefault);
+  --sparti-elements-item-contentActive: var(--bolt-elements-item-contentActive);
+  --sparti-elements-item-contentAccent: var(--bolt-elements-item-contentAccent);
+  --sparti-elements-item-contentDanger: var(--bolt-elements-item-contentDanger);
+  --sparti-elements-item-backgroundDefault: var(--bolt-elements-item-backgroundDefault);
+  --sparti-elements-item-backgroundActive: var(--bolt-elements-item-backgroundActive);
+  --sparti-elements-item-backgroundAccent: var(--bolt-elements-item-backgroundAccent);
+  --sparti-elements-item-backgroundDanger: var(--bolt-elements-item-backgroundDanger);
+  --sparti-elements-loader-background: var(--bolt-elements-loader-background);
+  --sparti-elements-loader-progress: var(--bolt-elements-loader-progress);
+  --sparti-elements-artifacts-background: var(--bolt-elements-artifacts-background);
+  --sparti-elements-artifacts-backgroundHover: var(--bolt-elements-artifacts-backgroundHover);
+  --sparti-elements-artifacts-borderColor: var(--bolt-elements-artifacts-borderColor);
+  --sparti-elements-artifacts-inlineCode-background: var(--bolt-elements-artifacts-inlineCode-background);
+  --sparti-elements-artifacts-inlineCode-text: var(--bolt-elements-artifacts-inlineCode-text);
+  --sparti-elements-actions-background: var(--bolt-elements-actions-background);
+  --sparti-elements-actions-code-background: var(--bolt-elements-actions-code-background);
+  --sparti-elements-messages-background: var(--bolt-elements-messages-background);
+  --sparti-elements-messages-linkColor: var(--bolt-elements-messages-linkColor);
+  --sparti-elements-messages-code-background: var(--bolt-elements-messages-code-background);
+  --sparti-elements-messages-inlineCode-background: var(--bolt-elements-messages-inlineCode-background);
+  --sparti-elements-messages-inlineCode-text: var(--bolt-elements-messages-inlineCode-text);
+  --sparti-elements-icon-success: var(--bolt-elements-icon-success);
+  --sparti-elements-icon-error: var(--bolt-elements-icon-error);
+  --sparti-elements-icon-primary: var(--bolt-elements-icon-primary);
+  --sparti-elements-icon-secondary: var(--bolt-elements-icon-secondary);
+  --sparti-elements-icon-tertiary: var(--bolt-elements-icon-tertiary);
+  --sparti-elements-dividerColor: var(--bolt-elements-dividerColor);
+  --sparti-elements-prompt-background: var(--bolt-elements-prompt-background);
+  --sparti-elements-sidebar-dropdownShadow: var(--bolt-elements-sidebar-dropdownShadow);
+  --sparti-elements-sidebar-buttonBackgroundDefault: var(--bolt-elements-sidebar-buttonBackgroundDefault);
+  --sparti-elements-sidebar-buttonBackgroundHover: var(--bolt-elements-sidebar-buttonBackgroundHover);
+  --sparti-elements-sidebar-buttonText: var(--bolt-elements-sidebar-buttonText);
+  --sparti-elements-preview-addressBar-background: var(--bolt-elements-preview-addressBar-background);
+  --sparti-elements-preview-addressBar-backgroundHover: var(--bolt-elements-preview-addressBar-backgroundHover);
+  --sparti-elements-preview-addressBar-backgroundActive: var(--bolt-elements-preview-addressBar-backgroundActive);
+  --sparti-elements-preview-addressBar-text: var(--bolt-elements-preview-addressBar-text);
+  --sparti-elements-preview-addressBar-textActive: var(--bolt-elements-preview-addressBar-textActive);
+  --sparti-elements-terminals-background: var(--bolt-elements-terminals-background);
+  --sparti-elements-terminals-buttonBackground: var(--bolt-elements-terminals-buttonBackground);
+  --sparti-elements-cta-background: var(--bolt-elements-cta-background);
+  --sparti-elements-cta-text: var(--bolt-elements-cta-text);
 }
 
 /* Color Tokens Dark Theme */
@@ -212,6 +276,70 @@
   --bolt-terminal-brightWhite: #f1f1f0;
   --modern-scrollbar-thumb-background: rgba(100, 100, 100, 0.3); // Example dark theme color (adjust as needed)
   --modern-scrollbar-thumb-backgroundHover: rgba(10, 10, 10, 0.8);
+
+  /* Sparti aliases for Bolt tokens (Dark) */
+  --sparti-elements-borderColor: var(--bolt-elements-borderColor);
+  --sparti-elements-borderColorActive: var(--bolt-elements-borderColorActive);
+  --sparti-elements-bg-depth-1: var(--bolt-elements-bg-depth-1);
+  --sparti-elements-bg-depth-2: var(--bolt-elements-bg-depth-2);
+  --sparti-elements-bg-depth-3: var(--bolt-elements-bg-depth-3);
+  --sparti-elements-bg-depth-4: var(--bolt-elements-bg-depth-4);
+  --sparti-elements-textPrimary: var(--bolt-elements-textPrimary);
+  --sparti-elements-textSecondary: var(--bolt-elements-textSecondary);
+  --sparti-elements-textTertiary: var(--bolt-elements-textTertiary);
+  --sparti-elements-code-background: var(--bolt-elements-code-background);
+  --sparti-elements-code-text: var(--bolt-elements-code-text);
+  --sparti-elements-button-primary-background: var(--bolt-elements-button-primary-background);
+  --sparti-elements-button-primary-backgroundHover: var(--bolt-elements-button-primary-backgroundHover);
+  --sparti-elements-button-primary-text: var(--bolt-elements-button-primary-text);
+  --sparti-elements-button-secondary-background: var(--bolt-elements-button-secondary-background);
+  --sparti-elements-button-secondary-backgroundHover: var(--bolt-elements-button-secondary-backgroundHover);
+  --sparti-elements-button-secondary-text: var(--bolt-elements-button-secondary-text);
+  --sparti-elements-button-danger-background: var(--bolt-elements-button-danger-background);
+  --sparti-elements-button-danger-backgroundHover: var(--bolt-elements-button-danger-backgroundHover);
+  --sparti-elements-button-danger-text: var(--bolt-elements-button-danger-text);
+  --sparti-elements-item-contentDefault: var(--bolt-elements-item-contentDefault);
+  --sparti-elements-item-contentActive: var(--bolt-elements-item-contentActive);
+  --sparti-elements-item-contentAccent: var(--bolt-elements-item-contentAccent);
+  --sparti-elements-item-contentDanger: var(--bolt-elements-item-contentDanger);
+  --sparti-elements-item-backgroundDefault: var(--bolt-elements-item-backgroundDefault);
+  --sparti-elements-item-backgroundActive: var(--bolt-elements-item-backgroundActive);
+  --sparti-elements-item-backgroundAccent: var(--bolt-elements-item-backgroundAccent);
+  --sparti-elements-item-backgroundDanger: var(--bolt-elements-item-backgroundDanger);
+  --sparti-elements-loader-background: var(--bolt-elements-loader-background);
+  --sparti-elements-loader-progress: var(--bolt-elements-loader-progress);
+  --sparti-elements-artifacts-background: var(--bolt-elements-artifacts-background);
+  --sparti-elements-artifacts-backgroundHover: var(--bolt-elements-artifacts-backgroundHover);
+  --sparti-elements-artifacts-borderColor: var(--bolt-elements-artifacts-borderColor);
+  --sparti-elements-artifacts-inlineCode-background: var(--bolt-elements-artifacts-inlineCode-background);
+  --sparti-elements-artifacts-inlineCode-text: var(--bolt-elements-artifacts-inlineCode-text);
+  --sparti-elements-actions-background: var(--bolt-elements-actions-background);
+  --sparti-elements-actions-code-background: var(--bolt-elements-actions-code-background);
+  --sparti-elements-messages-background: var(--bolt-elements-messages-background);
+  --sparti-elements-messages-linkColor: var(--bolt-elements-messages-linkColor);
+  --sparti-elements-messages-code-background: var(--bolt-elements-messages-code-background);
+  --sparti-elements-messages-inlineCode-background: var(--bolt-elements-messages-inlineCode-background);
+  --sparti-elements-messages-inlineCode-text: var(--bolt-elements-messages-inlineCode-text);
+  --sparti-elements-icon-success: var(--bolt-elements-icon-success);
+  --sparti-elements-icon-error: var(--bolt-elements-icon-error);
+  --sparti-elements-icon-primary: var(--bolt-elements-icon-primary);
+  --sparti-elements-icon-secondary: var(--bolt-elements-icon-secondary);
+  --sparti-elements-icon-tertiary: var(--bolt-elements-icon-tertiary);
+  --sparti-elements-dividerColor: var(--bolt-elements-dividerColor);
+  --sparti-elements-prompt-background: var(--bolt-elements-prompt-background);
+  --sparti-elements-sidebar-dropdownShadow: var(--bolt-elements-sidebar-dropdownShadow);
+  --sparti-elements-sidebar-buttonBackgroundDefault: var(--bolt-elements-sidebar-buttonBackgroundDefault);
+  --sparti-elements-sidebar-buttonBackgroundHover: var(--bolt-elements-sidebar-buttonBackgroundHover);
+  --sparti-elements-sidebar-buttonText: var(--bolt-elements-sidebar-buttonText);
+  --sparti-elements-preview-addressBar-background: var(--bolt-elements-preview-addressBar-background);
+  --sparti-elements-preview-addressBar-backgroundHover: var(--bolt-elements-preview-addressBar-backgroundHover);
+  --sparti-elements-preview-addressBar-backgroundActive: var(--bolt-elements-preview-addressBar-backgroundActive);
+  --sparti-elements-preview-addressBar-text: var(--bolt-elements-preview-addressBar-text);
+  --sparti-elements-preview-addressBar-textActive: var(--bolt-elements-preview-addressBar-textActive);
+  --sparti-elements-terminals-background: var(--bolt-elements-terminals-background);
+  --sparti-elements-terminals-buttonBackground: var(--bolt-elements-terminals-buttonBackground);
+  --sparti-elements-cta-background: var(--bolt-elements-cta-background);
+  --sparti-elements-cta-text: var(--bolt-elements-cta-text);
 }
 
 /*

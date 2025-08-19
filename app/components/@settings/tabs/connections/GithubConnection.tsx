@@ -9,6 +9,7 @@ import { storeGitHubToken, getGitHubToken, deleteGitHubToken } from '~/lib/serve
 import { encryptToken, decryptToken } from '~/lib/utils/encryption';
 
 interface GitHubUserResponse {
+  id: number;
   login: string;
   avatar_url: string;
   html_url: string;
@@ -352,9 +353,10 @@ export default function GitHubConnection() {
 
       try {
         const encryptedToken = await getGitHubToken(userId);
-        
+
         if (encryptedToken) {
           const decryptedToken = decryptToken(encryptedToken);
+
           // Fetch user data with the decrypted token
           await fetchGithubUser(decryptedToken);
         } else {
@@ -489,7 +491,7 @@ export default function GitHubConnection() {
     try {
       const userId = connection.user?.id.toString() || 'current-user-id'; // Replace with actual user ID retrieval
       await deleteGitHubToken(userId);
-      
+
       // Reset the token type ref
       tokenTypeRef.current = 'classic';
       setConnection({ user: null, token: '', tokenType: 'classic' });
