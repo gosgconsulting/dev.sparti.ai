@@ -1,18 +1,15 @@
 services:
   app-prod:
-    image: bolt-ai:production
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: bolt-ai-production
+    image: ghcr.io/stackblitz-labs/bolt.diy:latest
     ports:
       - '5173:5173'
-    env_file: '.env.local'
+    env_file: 'production.env'
     environment:
       - NODE_ENV=production
       - COMPOSE_PROFILES=production
       # No strictly needed but serving as hints for Coolify
       - PORT=5173
+      - VITE_THEME_NAME=sparti
       - GROQ_API_KEY=${GROQ_API_KEY}
       - HuggingFace_API_KEY=${HuggingFace_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -32,11 +29,14 @@ services:
     command: pnpm run dockerstart
     profiles:
       - production
+    volumes:
+      - type: bind
+        source: ./Sparti Theme/public/themes/sparti
+        target: /app/public/themes/sparti
+        read_only: true
 
   app-dev:
-    image: bolt-ai:development
-    build:
-      target: bolt-ai-development
+    image: ghcr.io/stackblitz-labs/bolt.diy:latest
     env_file: '.env.local'
     environment:
       - NODE_ENV=development
@@ -46,6 +46,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
       - PORT=5173
+      - VITE_THEME_NAME=sparti
       - GROQ_API_KEY=${GROQ_API_KEY}
       - HuggingFace_API_KEY=${HuggingFace_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -68,6 +69,10 @@ services:
         target: /app
         consistency: cached
       - /app/node_modules
+      - type: bind
+        source: ./Sparti Theme/public/themes/sparti
+        target: /app/public/themes/sparti
+        read_only: true
     ports:
       - '5173:5173'
     command: pnpm run dev --host 0.0.0.0

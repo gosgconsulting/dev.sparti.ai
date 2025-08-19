@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   bolt-diy:
-    image: ghcr.io/stackblitz-labs/bolt.diy:sha-bab9a64@sha256:17f2106b8dd6d9293d75492fbc01aea67b9c6b7e14c25717f6a05258e311bea7
+    image: ghcr.io/stackblitz-labs/bolt.diy:latest
     container_name: bolt-diy-production
     ports:
       - "80:5173"
@@ -11,6 +11,7 @@ services:
       - production.env
     environment:
       - NODE_ENV=production
+      - VITE_THEME_NAME=sparti
       - RUNNING_IN_DOCKER=true
       - VITE_HMR_HOST=0.0.0.0
     volumes:

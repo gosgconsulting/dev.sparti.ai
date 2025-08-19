@@ -1,8 +1,12 @@
 # Use the official bolt.diy image as base
-FROM ghcr.io/stackblitz-labs/bolt.diy:sha-bab9a64
+FROM ghcr.io/stackblitz-labs/bolt.diy:latest
 
 # Set working directory
 WORKDIR /app
+
+# Copy Sparti Theme public assets (if present) into the app's public folder
+# This enables optional theming without modifying core code
+COPY ["Sparti Theme/public/themes/sparti/", "/app/public/themes/sparti/"]
 
 # Railway requires the app to bind to 0.0.0.0 and use the PORT environment variable
 ENV HOST=0.0.0.0

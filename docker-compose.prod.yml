@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   bolt-diy:
-    image: ghcr.io/stackblitz-labs/bolt.diy:sha-bab9a64@sha256:17f2106b8dd6d9293d75492fbc01aea67b9c6b7e14c25717f6a05258e311bea7
+    image: ghcr.io/stackblitz-labs/bolt.diy:latest
     container_name: bolt-diy-production
     ports:
       - "5173:5173"
@@ -10,10 +10,15 @@ services:
       - production.env
     environment:
       - NODE_ENV=production
+      - VITE_THEME_NAME=sparti
       - RUNNING_IN_DOCKER=true
     volumes:
       # Optional: Mount a volume for persistent data if needed
       - bolt_data:/app/data
+      - type: bind
+        source: ./Sparti Theme/public/themes/sparti
+        target: /app/public/themes/sparti
+        read_only: true
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5173/health"]

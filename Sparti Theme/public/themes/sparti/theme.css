@@ -1,0 +1,12 @@
+/* Sparti Theme overrides */
+:root[data-theme='light'] {
+  --brand-primary: #5a3aff;
+}
+:root[data-theme='dark'] {
+  --brand-primary: #8c7cff;
+}
+
+/* Example usage (adjust to your design system) */
+.btn-primary {
+  background-color: var(--brand-primary);
+}

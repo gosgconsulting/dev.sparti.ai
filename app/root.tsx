@@ -16,30 +16,40 @@ import xtermStyles from '@xterm/xterm/css/xterm.css?url';
 
 import 'virtual:uno.css';
 
-export const links: LinksFunction = () => [
-  {
-    rel: 'icon',
-    href: '/favicon.svg',
-    type: 'image/svg+xml',
-  },
-  { rel: 'stylesheet', href: reactToastifyStyles },
-  { rel: 'stylesheet', href: tailwindReset },
-  { rel: 'stylesheet', href: globalStyles },
-  { rel: 'stylesheet', href: xtermStyles },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.googleapis.com',
-  },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-  },
-];
+export const links: LinksFunction = () => {
+  const themeName = (import.meta as any).env?.VITE_THEME_NAME as string | undefined;
+
+  const links = [
+    {
+      rel: 'icon',
+      href: '/favicon.svg',
+      type: 'image/svg+xml',
+    },
+    { rel: 'stylesheet', href: reactToastifyStyles },
+    { rel: 'stylesheet', href: tailwindReset },
+    { rel: 'stylesheet', href: globalStyles },
+    { rel: 'stylesheet', href: xtermStyles },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+    },
+  ];
+
+  if (themeName) {
+    links.push({ rel: 'stylesheet', href: `/themes/${themeName}/theme.css` });
+  }
+
+  return links as any;
+};
 
 const inlineThemeCode = stripIndents`
   setTutorialKitTheme();
