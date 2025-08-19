@@ -7,7 +7,9 @@ WORKDIR /app
 # Bring in our app code and dependencies so the container runs THIS repo, not the base image demo
 # 1) Install deps based on our lockfile
 COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable && corepack prepare pnpm@9.14.4 --activate && pnpm install --no-frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@9.14.4 --activate \
+    && rm -f pnpm-lock.yaml \
+    && pnpm install --no-frozen-lockfile
 
 # 2) Copy the rest of the repo (respects .dockerignore)
 COPY . .

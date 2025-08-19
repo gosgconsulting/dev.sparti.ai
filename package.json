@@ -213,7 +213,9 @@
   "packageManager": "pnpm@9.4.0",
   "pnpm": {
     "overrides": {
-      "youch": "^3.3.0"
+      "youch": "3.3.0",
+      "miniflare>youch": "3.3.0",
+      "wrangler>miniflare>youch": "3.3.0"
     }
   }
 }
